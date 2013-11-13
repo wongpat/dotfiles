@@ -1,4 +1,4 @@
-settings
+dotfiles
 ========
 
-Patrick's terminal settings
+Patrick's terminal settings and other conveniences

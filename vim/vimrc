@@ -1,0 +1,88 @@
+colorscheme lucius
+LuciusDarkLowContrast
+
+"""Vundle Bootstrap
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle (required)
+Bundle 'gmarik/vundle'
+
+" pwong bundles
+" Base vim bundles
+Bundle 'bling/vim-airline'
+Bundle 'scrooloose/nerdtree'
+" Git integration
+Bundle 'tpope/vim-fugitive'
+" Syntax linting
+Bundle 'scrooloose/syntastic'
+" Emmet for magical html editing
+Bundle "mattn/emmet-vim"
+
+filetype plugin indent on
+
+syntax on
+""" Tabbing behavior - ensure 4 spaces
+set tabstop=4 expandtab softtabstop=4 shiftwidth=4 autoindent
+" display indentation guides
+set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
+" case insensitive and smart case
+set ignorecase smartcase
+" Show linenumbers
+set number
+" Linebreak behavior
+set linebreak
+" Incremental search
+set incsearch
+" Highlight search
+set hlsearch
+" Allow regex searching
+set magic
+" Where to show the ruler
+set colorcolumn=81
+" C-style indent
+set cindent
+" Highlight current line
+set cul
+
+" For vim-airline
+set laststatus=2
+let g:airline_theme = "luna"
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols = {}
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.branch = '⎇'
+
+"""" NERDTree-related
+" Auto open NERDTree then focus back to opened window, but not for diffing
+if (!&diff)
+    au VimEnter * NERDTree
+    au VimEnter * wincmd p
+endif
+
+" Close all open buffers on entering a window if the only
+" buffer that's left is the NERDTree buffer
+function! s:CloseIfOnlyNerdTreeLeft()
+  if exists("t:NERDTreeBufName")
+    if bufwinnr(t:NERDTreeBufName) != -1
+      if winnr("$") == 1
+        q
+      endif
+    endif
+  endif
+endfunction
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+
+" Remove trailing space upon save
+autocmd! BufWritePre * :%s/\s\+$//e
+" convert tabs to spaces before writing file
+autocmd! BufWritePre * set expandtab | retab! 4
+
+""" Syntastic
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_style_error_symbol = 's✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_warning_symbol = 's⚠'

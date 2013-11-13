@@ -1,0 +1,33 @@
+[credential]
+    helper = osxkeychain
+[user]
+    name = Patrick Wong
+    email = wongpat@gmail.com
+    signingkey = 3C016CF6
+[core]
+    excludesfile = /Users/patrick/.gitignore_global
+    editor = /usr/bin/vim
+[branch]
+    autosetuprebase = always
+[difftool "sourcetree"]
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+    path =
+[mergetool "sourcetree"]
+    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+    trustExitCode = true
+[color]
+    ui = true
+[alias]
+    hist = log --color --pretty=format:\"%C(bold blue)%h %C(reset)- %C(bold green)(%ad)%C(reset) %C(bold white)%s%C(reset) %C(white)- %an%C(reset)%C(bold yellow)%d%C(reset)\" --relative-date --decorate
+    graph-v = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(bold white)%s%C(reset) %C(white)- %an%C(reset)'
+    graph = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+    unstage = reset HEAD --
+    co = checkout
+    cm = commit
+    br = branch
+    dt = difftool
+    push = push --tag
+    st = status -sb
+    tag = tag -s
+[grep]
+    linenumber = true

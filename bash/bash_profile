@@ -1,0 +1,60 @@
+#better prompt for sudo
+SUDO_PS1='[\u@\h \W]\$ '
+alias l='ls'
+alias ll='ls -l'
+alias f='find . -name'
+alias g='git'
+
+export CLICOLOR=1
+export GREP_OPTIONS='--color=auto'
+export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
+
+# Show current git status
+# Green = up to date, but may have untracked files
+# Yellow+/-X = ahead or behind by X commits, no mods/adds/deletes
+# Red[+/-X] = mods/adds/deletes, may also be ahead/behind by X commits
+# Compatible as of git 1.8.2+
+function parse_git_branch() {
+    local reset=$(tput sgr 0)
+    local ST=$(git status 2> /dev/null)
+    if [[ ! -z $ST ]]; then
+        OFF="$(tput setaf 4)✓"
+        PULLPUSH=$(echo "$ST" | egrep '(ahead)|(behind)' 2> /dev/null)
+        CHG=$(echo "$ST" | fgrep 'Changes' 2> /dev/null)
+        BRANCH=$(echo "$ST" | fgrep 'On branch' | awk '{print $NF}' 2> /dev/null)
+        if [[ ! -z $CHG ]]; then
+            COLOR=$(tput setaf 1)
+        fi
+
+        if [[ ! -z $PULLPUSH ]]; then
+            [[ -z $COLOR ]] && COLOR=$(tput setaf 3)
+            BEHIND=$(echo "$PULLPUSH" | fgrep 'behind' 2> /dev/null)
+            [[ ! -z $BEHIND ]] && AWK=7 || AWK=8
+            OFFSET=$(echo "$PULLPUSH" | awk "{print \$$AWK}")
+            [[ ! -z $BEHIND ]] && OFF="$(tput setaf 1)-$OFFSET" || OFF="$(tput setaf 2)+$OFFSET"
+        else
+            [[ -z $COLOR ]] && COLOR=$(tput setaf 2)
+        fi
+        echo -n "$reset[$COLOR$BRANCH$reset|$OFF$reset]"
+    else
+        echo -n "$reset"
+    fi
+}
+
+## Homebrew PATH modification
+export PATH=/usr/local/bin:~/bin:$PATH
+source /usr/local/bin/virtualenvwrapper.sh
+export PS1='$(tput bold)$(tput setaf 2)\u$(tput setaf 7)@$(tput setaf 6)\h$(tput setaf 7):\w $(parse_git_branch)\n  \$ $(tput sgr0)'
+
+function fixcoreaudio() {
+    sudo kill `ps -ax | grep 'coreaudiod' | grep 'sbin' |awk '{print $1}'`
+}
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
+# Aliases
+alias cleartrash="sudo rm -rf ~/.Trash/*"
+alias vi="vim"
+alias git-root='cd $(git rev-parse --show-toplevel)'
