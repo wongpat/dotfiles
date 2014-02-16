@@ -1,9 +1,16 @@
 #!/bin/sh
 
+function is_mac {
+    uname -a | fgrep "Darwin" &> /dev/null
+}
+
 BASE=$(dirname $0)
-RC=${1:-zshrc}
-mkdir -p $HOME/.zsh
-cd $HOME/.zsh
+
+ZSH=$HOME/.zsh
+mkdir -p $ZSH
+is_mac && cp -r $BASE/osx $ZSH && echo "[COPY] OSX aliases" || echo "[INFO] Not a mac, not copying osx files"
+cp -r $BASE/virtualenv $ZSH && echo "[COPY] virtualenv zsh prompt"
+cd $ZSH
 git clone git://github.com/olivierverdier/zsh-git-prompt.git git-prompt
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
 cd -
@@ -11,11 +18,11 @@ if [ -e $HOME/.zshrc ]; then
     read -p ".zshrc found. Backup and overwrite? [y/N] " yn
     case $yn in
         [Yy]* )
-            cp $HOME/.zshrc $HOME/zshrc.bak && cp $BASE/$RC $HOME/.zshrc
+            cp $HOME/.zshrc $HOME/zshrc.bak && cp $BASE/zshrc $HOME/.zshrc
             echo "zshrc envionrment created and backup created in $HOME/zshrc.bak"
             ;;
         * ) echo "Aborting" && exit ;;
     esac
 else
-    cp $BASE/$RC $HOME/.zshrc && echo 'zshrc envionrment created. You can open a new zsh shell to see changes'
+    cp $BASE/zshrc $HOME/.zshrc && echo 'zshrc envionrment created. You can open a new zsh shell to see changes'
 fi

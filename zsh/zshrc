@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=2000
+SAVEHIST=2000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -12,21 +12,16 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-### Customized prompt
-function prompt_char {
-    git branch &> /dev/null && echo '±' && return
-    hg root &> /dev/null && echo '☿' && return
-    echo '○'
-}
-
 setopt correct
 setopt noclobber
 setopt autocd
 
 ### Aliases
+alias -g L='| less'
+alias -g G='| grep -v grep | grep'
+alias ls="ls --color"
 alias l='ls'
 alias ll='ls -l'
-alias la='ls -a'
 alias lla='ls -la'
 alias f='find . -name'
 alias g='git'
@@ -34,11 +29,30 @@ alias serve="python -m SimpleHTTPServer"
 alias vi="vim"
 alias git-root='cd $(git rev-parse --show-toplevel)'
 
-export PATH=/usr/local/bin:~/bin/:$PATH
+# Set Path
+export PATH=/usr/local/bin:$HOME/bin/:$PATH
 typeset -U PATH
 
+# OS X Specific - comment if not applicable
+source $HOME/.zsh/osx/zshrc.sh
+# Custom virtualenv prompt
+source $HOME/.zsh/virtualenv/zshrc.sh
+# Git status prompt integration
 source $HOME/.zsh/git-prompt/zshrc.sh
+# Non git commands that affect git should change status as well
+# but may be slower. Disable if git repo is too cumbersome.
+export ZSH_THEME_GIT_PROMPT_NOCACHE=1
+
+# Customized prompt
+function prompt_char {
+    git branch &> /dev/null && echo '±' && return
+    hg root &> /dev/null && echo '☿' && return
+    echo '○'
+}
+
 PROMPT='%{$fg[green]%}%n%{$reset_color%} at %{$fg[blue]%}%m%{$reset_color%} in %{$fg[yellow]%}${PWD/#$HOME/~}%{$reset_color%}
- $(prompt_char) '
-RPROMPT='$(git_super_status)'
+  $(prompt_char) '
+RPROMPT='$(venv_prompt)$(git_super_status)'
+
+# Syntax highlighting on the shell
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
