@@ -1,20 +1,7 @@
-[credential]
-    helper = osxkeychain
-[user]
-    name = Patrick Wong
-    email = wongpat@gmail.com
-    signingkey = 3C016CF6
 [core]
-    excludesfile = /Users/patrick/.gitignore_global
     editor = /usr/bin/vim
 [branch]
     autosetuprebase = always
-[difftool "sourcetree"]
-    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-    path =
-[mergetool "sourcetree"]
-    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-    trustExitCode = true
 [color]
     ui = true
 [alias]
