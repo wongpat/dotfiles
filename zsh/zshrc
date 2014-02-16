@@ -1,0 +1,43 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '$HOME/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+### Customized prompt
+function prompt_char {
+    git branch &> /dev/null && echo '±' && return
+    hg root &> /dev/null && echo '☿' && return
+    echo '○'
+}
+
+setopt correct
+setopt noclobber
+
+source $HOME/.zsh/git-prompt/zshrc.sh
+PROMPT='%{$fg[green]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} in %{$fg[magenta]%}${PWD/#$HOME/~}%{$reset_color%}
+  $(prompt_char) '
+RPROMPT='$(git_super_status)'
+
+### Aliases
+alias l='ls'
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias f='find . -name'
+alias g='git'
+alias serve="python -m SimpleHTTPServer"
+alias vi="vim"
+alias git-root='cd $(git rev-parse --show-toplevel)'
+
+export PATH=/usr/local/bin:~/bin/:$PATH
+typeset -U PATH
+
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
