@@ -40,8 +40,6 @@ set incsearch
 set hlsearch
 " Allow regex searching
 set magic
-" Where to show the ruler
-set colorcolumn=81
 " C-style indent
 set cindent
 " Highlight current line
@@ -58,9 +56,12 @@ let g:airline_symbols.branch = '⎇'
 
 """" NERDTree-related
 " Auto open NERDTree then focus back to opened window, but not for diffing
+" Settings that will not apply in vimdiff
 if (!&diff)
     au VimEnter * NERDTree
     au VimEnter * wincmd p
+    " Where to show the ruler
+    execute "set colorcolumn=" . join(range(101,335), ',')
 endif
 
 " Close all open buffers on entering a window if the only
@@ -74,12 +75,12 @@ function! s:CloseIfOnlyNerdTreeLeft()
     endif
   endif
 endfunction
-autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+autocmd! WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 
 " Remove trailing space upon save
-autocmd! BufWritePre * :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
 " convert tabs to spaces before writing file
-autocmd! BufWritePre * set expandtab | retab! 4
+autocmd BufWritePre * set expandtab | retab! 4
 
 """ Syntastic
 let g:syntastic_error_symbol = '✗'

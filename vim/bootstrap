@@ -1,0 +1,16 @@
+#!/bin/bash
+
+base=$(dirname $0)
+git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+if [ -e $HOME/.vimrc ]; then
+    read -p ".vimrc exists. Overwrite? [y/N] " yn
+    case $yn in
+        [Yy]* )
+            cp $HOME/.vimrc $HOME/vimrc.bak
+            cp $base/vimrc $HOME/.vimrc && echo "Created backup $HOME/vimrc.bak"
+            ;;
+        * ) echo "Aborting" && exit ;;
+    esac
+else
+    cp $base/vimrc $HOME/.vimrc && echo ".vimrc copied"
+fi

@@ -21,13 +21,15 @@ function prompt_char {
 
 setopt correct
 setopt noclobber
+setopt autocd
 
 source $HOME/.zsh/git-prompt/zshrc.sh
 PROMPT='%{$fg[green]%}%n%{$reset_color%} at %{$fg[blue]%}%m%{$reset_color%} in %{$fg[yellow]%}${PWD/#$HOME/~}%{$reset_color%}
-  $(prompt_char) '
+ $(prompt_char) '
 RPROMPT='$(git_super_status)'
 
 ### Aliases
+alias -g L='| less'
 alias l='ls'
 alias ll='ls -l'
 alias la='ls -a'
