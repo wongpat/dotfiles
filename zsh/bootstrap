@@ -1,18 +1,15 @@
 #!/bin/sh
 
-function is_mac {
-    uname -a | fgrep "Darwin" &> /dev/null
-}
-
 BASE=$(dirname $0)
 
 ZSH=$HOME/.zsh
 mkdir -p $ZSH
-is_mac && cp -r $BASE/osx $ZSH && echo "[COPY] OSX aliases" || echo "[INFO] Not a mac, not copying osx files"
+[[ $(uname) == "Darwin" ]] && cp -r $BASE/osx $ZSH && echo "[COPY] OSX aliases" || echo "[INFO] Not a mac, not copying osx files"
 cp -r $BASE/virtualenv $ZSH && echo "[COPY] virtualenv zsh prompt"
 cd $ZSH
 git clone git://github.com/olivierverdier/zsh-git-prompt.git git-prompt
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+git clone git://github.com/zsh-users/zsh-completions.git
 cd -
 if [ -e $HOME/.zshrc ]; then
     read -p ".zshrc found. Backup and overwrite? [y/N] " yn
