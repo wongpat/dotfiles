@@ -38,6 +38,9 @@ typeset -U PATH
 source $HOME/.zsh/osx/zshrc.sh
 # Custom virtualenv prompt
 source $HOME/.zsh/virtualenv/zshrc.sh
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
 # Git status prompt integration
 source $HOME/.zsh/git-prompt/zshrc.sh
 # Non git commands that affect git should change status as well
