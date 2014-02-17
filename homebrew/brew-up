@@ -1,0 +1,11 @@
+#!/bin/sh
+
+printf "🍺  Malting..."
+brew update
+printf "👌\n🍺  Mashing..."
+brew upgrade
+printf "👌\n🍺  Conditioning..."
+brew cleanup
+printf "👌\n🍺  Taste test..."
+brew doctor && echo "👍" || echo "😱"
+
