@@ -18,3 +18,5 @@
     tag = tag -s
 [grep]
     linenumber = true
+[push]
+    default = simple
