@@ -1,6 +1,3 @@
-colorscheme lucius
-LuciusDarkLowContrast
-
 """Vundle Bootstrap
 set nocompatible
 filetype off

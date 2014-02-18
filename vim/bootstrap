@@ -1,5 +1,4 @@
 #!/bin/bash
-
 base=$(dirname $0)
 git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 if [ -e $HOME/.vimrc ]; then
@@ -14,3 +13,5 @@ if [ -e $HOME/.vimrc ]; then
 else
     cp $base/vimrc $HOME/.vimrc && echo ".vimrc copied"
 fi
+
+vim +BundleInstall +qall && echo ".vimrc is now set up with vundle plugins"
