@@ -7,7 +7,7 @@ bindkey -e
 # The following lines were added by compinstall
 zstyle :compinstall filename '$HOME/.zshrc'
 
-export fpath=($HOME/.zsh/zsh-completions/src $fpath)
+fpath=($HOME/.zsh/zsh-completions/src $fpath)
 autoload zmv
 autoload -Uz compinit
 compinit
