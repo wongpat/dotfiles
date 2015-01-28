@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    brew install reattach-to-user-namespace;
+    cp -i osx-tmux.conf $HOME/.tmux.conf
+else
+    cp -i tmux.conf $HOME/.tmux.conf
+fi
+
+
