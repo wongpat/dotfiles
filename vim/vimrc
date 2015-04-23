@@ -1,25 +1,36 @@
-colorscheme lucius
-LuciusDarkLowContrast
-
 """Vundle Bootstrap
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle (required)
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " pwong bundles
 " Base vim bundles
-Bundle 'bling/vim-airline'
-Bundle 'scrooloose/nerdtree'
+Plugin 'bling/vim-airline'
+Plugin 'scrooloose/nerdtree'
 " Git integration
-Bundle 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 " Syntax linting
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 " Emmet for magical html editing
-Bundle "mattn/emmet-vim"
+Plugin 'mattn/emmet-vim'
+
+" pwong custom syntax
+" jsx/riotjs syntax highlighting
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+" csv
+Plugin 'chrisbra/csv.vim'
+
+" pwong colors
+Plugin 'jonathanfilip/vim-lucius'
+call vundle#end()
+
+colorscheme lucius
+LuciusDarkLowContrast
 
 filetype plugin indent on
 
@@ -45,6 +56,10 @@ set cindent
 " Highlight current line
 set cul
 
+" Use jsx for js files as well
+let g:jsx_ext_required = 0
+let b:javascript_enable_domhtmlcss = 1
+
 " For vim-airline
 set laststatus=2
 let g:airline_theme = "luna"
@@ -61,7 +76,9 @@ if (!&diff)
     au VimEnter * NERDTree
     au VimEnter * wincmd p
     " Where to show the ruler
-    execute "set colorcolumn=" . join(range(101,335), ',')
+    if (!&ft == "csv")
+        execute "set colorcolumn=" . join(range(101,335), ',')
+    endif
 endif
 
 " Close all open buffers on entering a window if the only

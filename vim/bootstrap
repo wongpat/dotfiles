@@ -1,15 +1,6 @@
 #!/bin/bash
 base=$(dirname $0)
 
-gettheme() {
-    echo "Getting lucius color theme..." && \
-    cd $HOME/.vim && git clone https://github.com/jonathanfilip/vim-lucius && \
-    cp -ir vim-lucius/colors .
-    rm -rf vim-lucius
-}
-
-gettheme
-
 git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 if [ -e $HOME/.vimrc ]; then
     read -p ".vimrc exists. Overwrite? [y/N] " yn
@@ -17,7 +8,6 @@ if [ -e $HOME/.vimrc ]; then
         [Yy]* )
             cp $HOME/.vimrc $HOME/vimrc.bak
             cp $base/vimrc $HOME/.vimrc && echo "Created backup $HOME/vimrc.bak"
-            gettheme
             ;;
         * )
             echo "Aborting"
