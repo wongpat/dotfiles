@@ -19,7 +19,8 @@ setopt autocd
 
 ### Aliases
 alias -g L='| less'
-alias -g G='| grep -v grep | grep'
+alias -g G='| fgrep -v grep | grep'
+alias -g EG='| fgrep -v grep | egrep'
 alias ls="ls --color"
 alias l='ls'
 alias ll='ls -l'
