@@ -20,28 +20,34 @@ setopt autocd
 ### Aliases
 alias -g L='| less'
 alias -g G='| fgrep -v grep | grep'
-alias -g EG='| fgrep -v grep | egrep'
+alias -g EG='| fgrep -v grep | egrep --color'
 alias ls="ls --color"
 alias l='ls'
 alias ll='ls -l'
 alias lla='ls -la'
-alias f='find . -name'
+alias f='noglob find -name'
 alias g='git'
 alias serve="python -m SimpleHTTPServer"
 alias vi="vim"
 alias git-root='cd $(git rev-parse --show-toplevel)'
+alias reloadrc="source $HOME/.zshrc"
+
+# json interaction
+function tidyjson() {
+    local args=$(echo $@ | sed -e 's/[^ ][^ ]*/["&"]/g' | sed 's/ //')
+    python -c "import sys, json; print json.dumps((json.load(sys.stdin)$args), sort_keys=True, indent=4)"
+}
 
 # Set Path
-export PATH=/usr/local/bin:$HOME/bin/:$PATH
+export PATH=$PATH:/usr/local/bin:$HOME/bin/
 typeset -U PATH
 
 # OS X Specific - comment if not applicable
-source $HOME/.zsh/osx/zshrc.sh
+if [ "$(uname -s)" = "Darwin" ]; then
+    source $HOME/.zsh/osx/zshrc.sh
+fi
 # Custom virtualenv prompt
 source $HOME/.zsh/virtualenv/zshrc.sh
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-    source /usr/local/bin/virtualenvwrapper.sh
-fi
 # Git status prompt integration
 source $HOME/.zsh/git-prompt/zshrc.sh
 # Non git commands that affect git should change status as well
@@ -58,6 +64,16 @@ function prompt_char {
 PROMPT='%{$fg[green]%}%n%{$reset_color%} at %{$fg[blue]%}%m%{$reset_color%} in %{$fg[yellow]%}${PWD/#$HOME/~}%{$reset_color%}
   $(prompt_char) '
 RPROMPT='$(venv_prompt)$(git_super_status)'
+
+# Pew (python virtualenv management)
+command -v pew > /dev/null 2>&1 && {
+    export WORKON_HOME="/home/pwong/venvs"
+    source $(pew shell_config)
+}
+
+function psgrep {
+    ps xao user,pid,ppid,%cpu,%mem,start,time,command EG "(PID|$@)"
+}
 
 # Syntax highlighting on the shell
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
