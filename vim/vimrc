@@ -9,7 +9,8 @@ Plugin 'gmarik/vundle'
 
 " pwong bundles
 " Base vim bundles
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 " Git integration
 Plugin 'tpope/vim-fugitive'
