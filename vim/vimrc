@@ -23,6 +23,7 @@ Plugin 'mattn/emmet-vim'
 " jsx/riotjs syntax highlighting
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
+Plugin 'hdima/python-syntax'
 " csv
 Plugin 'chrisbra/csv.vim'
 
@@ -56,6 +57,8 @@ set magic
 set cindent
 " Highlight current line
 set cul
+" 80-line column
+set colorcolumn=80
 
 " Use jsx for js files as well
 let g:jsx_ext_required = 0
@@ -105,3 +108,5 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_style_error_symbol = 's✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_warning_symbol = 's⚠'
+
+let python_highlight_all = 1
