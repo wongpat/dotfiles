@@ -23,9 +23,10 @@ Plugin 'mattn/emmet-vim'
 " jsx/riotjs syntax highlighting
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-Plugin 'hdima/python-syntax'
 " csv
 Plugin 'chrisbra/csv.vim'
+" python
+Plugin 'vim-python/python-syntax'
 
 " pwong colors
 Plugin 'jonathanfilip/vim-lucius'
@@ -59,6 +60,8 @@ set cindent
 set cul
 " 80-line column
 set colorcolumn=80
+" Omnicomplete
+set omnifunc=syntaxcomplete#Complete
 
 " Use jsx for js files as well
 let g:jsx_ext_required = 0
@@ -66,7 +69,7 @@ let b:javascript_enable_domhtmlcss = 1
 
 " For vim-airline
 set laststatus=2
-let g:airline_theme = "luna"
+let g:airline_theme = "wombat"
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_symbols = {}
@@ -103,10 +106,11 @@ autocmd BufWritePre * :%s/\s\+$//e
 " convert tabs to spaces before writing file
 autocmd BufWritePre * set expandtab | retab! 4
 
+""" Python
+let g:python_highlight_all = 1
+
 """ Syntastic
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_style_error_symbol = 's✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_warning_symbol = 's⚠'
-
-let python_highlight_all = 1
