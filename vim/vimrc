@@ -1,43 +1,36 @@
-"""Vundle Bootstrap
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#begin()
-
-" let Vundle manage Vundle (required)
-Plugin 'gmarik/vundle'
+call plug#begin('~/.vim/bundle')
 
 " pwong bundles
 " Base vim bundles
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Git integration
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 " Syntax linting
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " Emmet for magical html editing
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
-" pwong custom syntax
-" jsx/riotjs syntax highlighting
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
+" React/jsx syntax highlighting
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 " csv
-Plugin 'chrisbra/csv.vim'
+Plug 'chrisbra/csv.vim'
 " python
-Plugin 'vim-python/python-syntax'
+Plug 'tmhedberg/SimpylFold'
+Plug 'Konfekt/FastFold'
+" autocomplete
+Plug 'davidhalter/jedi-vim'
+
+" fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " pwong colors
-Plugin 'jonathanfilip/vim-lucius'
-call vundle#end()
+Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
+call plug#end()
 
-colorscheme lucius
-LuciusDarkLowContrast
-
-filetype plugin indent on
-
-syntax on
 """ Tabbing behavior - ensure 4 spaces
 set tabstop=4 expandtab softtabstop=4 shiftwidth=4 autoindent
 " display indentation guides
@@ -56,12 +49,11 @@ set hlsearch
 set magic
 " C-style indent
 set cindent
-" Highlight current line
-set cul
-" 80-line column
-set colorcolumn=80
-" Omnicomplete
-set omnifunc=syntaxcomplete#Complete
+
+" file preview (need ruby and rouge for syntax highlighting. gem install
+" rouge)
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " Use jsx for js files as well
 let g:jsx_ext_required = 0
@@ -69,45 +61,25 @@ let b:javascript_enable_domhtmlcss = 1
 
 " For vim-airline
 set laststatus=2
-let g:airline_theme = "wombat"
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_symbols = {}
 let g:airline_symbols.linenr = '␤'
 let g:airline_symbols.branch = '⎇'
 
-"""" NERDTree-related
-" Auto open NERDTree then focus back to opened window, but not for diffing
-" Settings that will not apply in vimdiff
-if (!&diff)
-    au VimEnter * NERDTree
-    au VimEnter * wincmd p
-    " Where to show the ruler
-    if (!&ft == "csv")
-        execute "set colorcolumn=" . join(range(101,335), ',')
-    endif
-endif
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+" Enable folding with the spacebar
+nnoremap <space> za
+let g:SimpylFold_docstring_preview = 1
 
-" Close all open buffers on entering a window if the only
-" buffer that's left is the NERDTree buffer
-function! s:CloseIfOnlyNerdTreeLeft()
-  if exists("t:NERDTreeBufName")
-    if bufwinnr(t:NERDTreeBufName) != -1
-      if winnr("$") == 1
-        q
-      endif
-    endif
-  endif
-endfunction
-autocmd! WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+colorscheme nord
 
 " Remove trailing space upon save
 autocmd BufWritePre * :%s/\s\+$//e
 " convert tabs to spaces before writing file
 autocmd BufWritePre * set expandtab | retab! 4
-
-""" Python
-let g:python_highlight_all = 1
 
 """ Syntastic
 let g:syntastic_error_symbol = '✗'

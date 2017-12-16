@@ -1,7 +1,8 @@
 #!/bin/bash
 base=$(dirname $0)
 
-git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 if [ -e $HOME/.vimrc ]; then
     read -p ".vimrc exists. Overwrite? [y/N] " yn
     case $yn in
@@ -18,5 +19,5 @@ else
     cp $base/vimrc $HOME/.vimrc && echo ".vimrc copied"
 fi
 
-vim +BundleInstall +qall && echo ".vimrc is now set up with vundle plugins"
+vi +PlugInstall && echo ".vimrc is now set up with plugins."
 
