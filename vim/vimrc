@@ -17,11 +17,11 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 " csv
 Plug 'chrisbra/csv.vim'
-" python
 Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
-" autocomplete
+" python
 Plug 'davidhalter/jedi-vim'
+Plug 'vim-python/python-syntax'
 
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -61,11 +61,10 @@ let b:javascript_enable_domhtmlcss = 1
 
 " For vim-airline
 set laststatus=2
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
+let g:airline_powerline_fonts = 1
 let g:airline_symbols = {}
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.branch = ''
 
 " Enable folding
 set foldmethod=indent
@@ -82,7 +81,10 @@ autocmd BufWritePre * :%s/\s\+$//e
 autocmd BufWritePre * set expandtab | retab! 4
 
 """ Syntastic
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_style_error_symbol = 's✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_style_warning_symbol = 's⚠'
+let g:syntastic_error_symbol = '✗✗'
+let g:syntastic_style_error_symbol = '✠✠'
+let g:syntastic_warning_symbol = '∆∆'
+let g:syntastic_style_warning_symbol = '≈≈'
+
+""" python
+let g:python_highlight_all = 1
