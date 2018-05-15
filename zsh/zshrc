@@ -21,33 +21,26 @@ setopt autocd
 alias -g L='| less'
 alias -g G='| fgrep -v grep | grep'
 alias -g EG='| fgrep -v grep | egrep --color'
-alias -g H='| head'
-alias -g T='| tail'
 alias ls="ls --color"
 alias l='ls'
 alias ll='ls -l'
 alias lla='ls -la'
-alias f='noglob find -name'
+alias f='find . -name'
 alias g='git'
-alias serve="python -m http.server || python -m SimpleHTTPServer"
+alias serve="python -m http.server"
 alias vi="vim"
 alias git-root='cd $(git rev-parse --show-toplevel)'
-alias reloadrc="source $HOME/.zshrc"
-
-# json interaction
-function tidyjson() {
-    local args=$(echo $@ | sed -e 's/[^ ][^ ]*/["&"]/g' | sed 's/ //')
-    python -c "import sys, json; print json.dumps((json.load(sys.stdin)$args), sort_keys=True, indent=4)"
-}
+alias -g tidy-json='python -m json.tool'
 
 # Set Path
-export PATH=$PATH:/usr/local/bin:$HOME/bin/
+export PATH=$PATH:/usr/local/bin:$HOME/bin
+GOPATH=${HOME}/go
+export PATH=$PATH:$GOPATH/bin
 typeset -U PATH
 
-# OS X Specific - comment if not applicable
-if [ "$(uname -s)" = "Darwin" ]; then
-    source $HOME/.zsh/osx/zshrc.sh
-fi
+# Grep color
+export GREP_OPTIONS="--color=auto"
+
 # Custom virtualenv prompt
 source $HOME/.zsh/virtualenv/zshrc.sh
 # Git status prompt integration
@@ -67,11 +60,12 @@ PROMPT='%{$fg[green]%}%n%{$reset_color%} at %{$fg[blue]%}%m%{$reset_color%} in %
   $(prompt_char) '
 RPROMPT='$(venv_prompt)$(git_super_status)'
 
-# Pew (python virtualenv management)
-command -v pew > /dev/null 2>&1 && {
-    export WORKON_HOME="/home/pwong/venvs"
-    source $(pew shell_config)
-}
+export JAVA_PREF="8"
+source /usr/local/ubuntu-shared/env.sh
+
+# Pew
+export WORKON_HOME="/home/pwong/venvs"
+source $(pew shell_config)
 
 function psgrep {
     ps xao user,pid,ppid,%cpu,%mem,start,time,command EG "(PID|$@)"
@@ -79,3 +73,24 @@ function psgrep {
 
 # Syntax highlighting on the shell
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+function _ssh_authsock() {
+    if [ -z "$TMUX" ] && [ -n "$SSH_AUTH_SOCK" ]; then
+        local client="${${SSH_CLIENT%% *}//./}"
+        export SSH_AUTH_SOCK_CLIENT="$HOME/.ssh/ssh-auth-sock.$client"
+        ln -fns "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK_CLIENT"
+    else
+        export SSH_AUTH_SOCK="$SSH_AUTH_SOCK_CLIENT"
+    fi
+}
+
+_ssh_authsock
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[ -f "/opt/miniconda3/etc/profile.d/conda.sh" ] && source /opt/miniconda3/etc/profile.d/conda.sh
+conda activate
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
