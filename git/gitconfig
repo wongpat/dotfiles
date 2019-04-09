@@ -1,5 +1,3 @@
-[credential]
-    helper = osxkeychain
 [user]
     name = Patrick Wong
     email = wongpat@gmail.com
@@ -23,9 +21,8 @@
 [color]
     ui = true
 [alias]
-    hist = log --color --pretty=format:\"%C(bold blue)%h %C(reset)- %C(bold green)(%ad)%C(reset) %C(bold white)%s%C(reset) %C(white)- %an%C(reset)%C(bold yellow)%d%C(reset)\" --relative-date --decorate
-    graph-v = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(bold white)%s%C(reset) %C(white)- %an%C(reset)'
-    graph = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+    graph-v = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(bold white)%s%C(reset) %C(white)- %an%C(reset)'
+    graph = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(white)- %an%C(reset)%C(auto)%d%C(reset)'
     unstage = reset HEAD --
     br = branch
     cm = commit
