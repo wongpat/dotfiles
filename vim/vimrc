@@ -8,7 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Syntax linting
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 " Emmet for magical html editing
 Plug 'mattn/emmet-vim'
 
@@ -20,15 +20,16 @@ Plug 'chrisbra/csv.vim'
 Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 " python
-Plug 'davidhalter/jedi-vim'
 Plug 'vim-python/python-syntax'
+Plug 'metakirby5/codi.vim'
+"Plug 'sheerun/vim-polyglot'
 
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " pwong colors
-Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 """ Tabbing behavior - ensure 4 spaces
@@ -74,7 +75,8 @@ let b:javascript_enable_domhtmlcss = 1
 
 " For vim-airline
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 0
 let g:airline_symbols = {}
 let g:airline_symbols.linenr = ''
 let g:airline_symbols.branch = ''
@@ -92,13 +94,17 @@ autocmd BufWritePre * :%s/\s\+$//e
 " convert tabs to spaces before writing file
 autocmd BufWritePre * set expandtab | retab! 4
 
-""" Syntastic
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_checker_args = '--ignore=E501'
-let g:syntastic_error_symbol = '✗✗'
-let g:syntastic_style_error_symbol = '✠✠'
-let g:syntastic_warning_symbol = '∆∆'
-let g:syntastic_style_warning_symbol = '≈≈'
+""" Ale
+let g:ale_sign_error = '✗✗'
+let g:ale_sign_warning = '∆∆'
 
 """ python
 let g:python_highlight_all = 1
+
+set cursorline
+
+set diffopt+=iwhite
+
+set mouse=a
+
+set clipboard+=unnamed

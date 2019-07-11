@@ -60,13 +60,6 @@ PROMPT='%{$fg[green]%}%n%{$reset_color%} at %{$fg[blue]%}%m%{$reset_color%} in %
   $(prompt_char) '
 RPROMPT='$(venv_prompt)$(git_super_status)'
 
-export JAVA_PREF="8"
-source /usr/local/ubuntu-shared/env.sh
-
-# Pew
-export WORKON_HOME="/home/pwong/venvs"
-source $(pew shell_config)
-
 function psgrep {
     ps xao user,pid,ppid,%cpu,%mem,start,time,command EG "(PID|$@)"
 }
@@ -87,10 +80,3 @@ function _ssh_authsock() {
 _ssh_authsock
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-[ -f "/opt/miniconda3/etc/profile.d/conda.sh" ] && source /opt/miniconda3/etc/profile.d/conda.sh
-conda activate
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

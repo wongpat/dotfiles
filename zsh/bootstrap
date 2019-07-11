@@ -7,9 +7,9 @@ mkdir -p $ZSH
 [[ $(uname) == "Darwin" ]] && cp -r $BASE/osx $ZSH && echo "[COPY] OSX aliases" || echo "[INFO] Not a mac, not copying osx files"
 cp -r $BASE/virtualenv $ZSH && echo "[COPY] virtualenv zsh prompt"
 cd $ZSH
-git clone git://github.com/olivierverdier/zsh-git-prompt.git git-prompt
-git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
-git clone git://github.com/zsh-users/zsh-completions.git
+git clone https://github.com/olivierverdier/zsh-git-prompt.git git-prompt
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+git clone https://github.com/zsh-users/zsh-completions.git
 cd -
 if [ -e $HOME/.zshrc ]; then
     read -p ".zshrc found. Backup and overwrite? [y/N] " yn
