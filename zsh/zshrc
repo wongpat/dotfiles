@@ -2,7 +2,6 @@
 HISTFILE=~/.histfile
 HISTSIZE=2000
 SAVEHIST=2000
-bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '$HOME/.zshrc'
@@ -41,6 +40,8 @@ typeset -U PATH
 # Grep color
 export GREP_OPTIONS="--color=auto"
 
+# Vi mode
+source "$HOME/.zsh/zsh-vim-mode/zsh-vim-mode.plugin.zsh"
 # Custom virtualenv prompt
 source $HOME/.zsh/virtualenv/zshrc.sh
 # Git status prompt integration
@@ -80,3 +81,11 @@ function _ssh_authsock() {
 _ssh_authsock
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# vi mode cursor
+MODE_CURSOR_VIINS="#aaeeaa blinking bar"
+MODE_CURSOR_REPLACE="$MODE_CURSOR_VIINS #eeaaaa"
+MODE_CURSOR_VICMD="#aaeeaa block"
+MODE_CURSOR_SEARCH="#eeaaee steady underline"
+MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady bar"
+MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #aaeeee"
